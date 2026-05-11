@@ -10,6 +10,11 @@ COPY . .
 
 RUN CGO_ENABLED=0 go build -o /myapp .
 
-ENTRYPOINT ["/myapp"]
+FROM scratch
+
+COPY --from=build /myapp /app
+
+ENTRYPOINT ["/app"]
+
 
 
