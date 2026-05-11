@@ -1,22 +1,16 @@
-FROM ubuntu
-
-WORKDIR /app
-
-COPY requirements.txt /app/
-COPY devops /app/
-
-RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
-
-SHELL ["/bin/bash", "-c"]
-
-RUN python3 -m venv venv1 && \
-source venv1/bin/activate && \
-pip install --no-cache-dir -r requirements.txt
-
-EXPOSE 8000
-
-CMD source venv1/bin/activate && python3 manage.py runserver 0.0.0.0:8000
-
+# Get ubuntu image
+FROM        ubuntu
+#Set working directory as /app folder
+WORKDIR     /app
+#Copy application code to app directory
+COPY        requirements.txt /app/
+COPY        devops  /app/
+#Install required pyhton librabries
+RUN         apt-get update && apt-get install -y python3 pip
+RUN         python3 install requirements.txt && cd devops
+EXPOSE      8000
+ENTRYPOINT  ["python3"]
+CMD         ["manage.py", "runserver", "0.0.0.0:8000"]
 
 
 
