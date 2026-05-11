@@ -9,11 +9,11 @@ RUN         python3 -m venv venv1
 ENV         PATH="venv1/bin:$PATH"
 #Copy application code to app directory
 COPY        requirements.txt .
-RUN         pip install --no-cache-dir -r requirements.txt
+RUN         venv1/bin/pip install --no-cache-dir -r requirements.txt
 COPY        . .
 WORKDIR     /app/devops
 EXPOSE      8000
-CMD         ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD         ["venv1/bin/python3", "manage.py", "runserver", "0.0.0.0:8000"]
 
 
 
